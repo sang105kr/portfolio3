@@ -27,6 +27,13 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 파일 업로드 -->
+	<beans:bean id="multipartResolver"
+							class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760" /> <!-- 10MB -->
+		<beans:property name="defaultEncoding" value="UTF-8" />				
+	</beans:bean>
+		
 	<!-- "com.kh.myapp" 경로상의 모든 클래스를 스캔하여 인스턴스를 자동생성해준다
 	      @Component(@Contoller) -->
 	<context:component-scan base-package="com.kh.myapp" 
