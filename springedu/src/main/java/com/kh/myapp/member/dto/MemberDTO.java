@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Entity
@@ -27,4 +29,8 @@ public class MemberDTO {
 	private String birth; 		//생년월일
 	private Timestamp cdate;				//가입일
 	private Timestamp udate;				//변경일
+	
+	private MultipartFile file;
+	private String originFileName;  //업로드파일명
+	private String randomFileName;  //난수파일명
 }

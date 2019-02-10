@@ -27,7 +27,7 @@ public class MemberDAOImplXML implements MemberDAO {
 	public boolean insert(MemberDTO memberDTO) {
 		logger.info("MemberDAOImplXML.insert 호출됨!");
 		boolean success = false;
-		int cnt = sqlSession.insert("memberInsert", memberDTO);
+		int cnt = sqlSession.insert("mappers.member.memberInsert", memberDTO);
 		if (cnt>0) { success = true; }
 		return success;
 	}
@@ -36,7 +36,7 @@ public class MemberDAOImplXML implements MemberDAO {
 	public boolean modify(MemberDTO memberDTO) {
 		logger.info("MemberDAOImplXML.modify 호출됨!");
 		boolean success = false;
-		int cnt = sqlSession.update("memberUpdate", memberDTO);
+		int cnt = sqlSession.update("mappers.member.memberUpdate", memberDTO);
 		if (cnt>0) { success = true; }
 		return success;
 	}
@@ -48,7 +48,7 @@ public class MemberDAOImplXML implements MemberDAO {
 		Map<String,String> map = new HashMap<>();
 		map.put("id", id);
 		map.put("pw", pw);
-		int cnt = sqlSession.delete("memberDelete", map);
+		int cnt = sqlSession.delete("mappers.member.memberDelete", map);
 		if (cnt>0) { success = true; }
 		return success;
 	}
@@ -57,7 +57,7 @@ public class MemberDAOImplXML implements MemberDAO {
 	public boolean adminDelete(String id) {
 		logger.info("MemberDAOImplXML.adminDelete 호출됨!");
 	boolean success = false;
-	int cnt = sqlSession.delete("adminMemberDelete", id);
+	int cnt = sqlSession.delete("mappers.member.adminMemberDelete", id);
 	if (cnt>0) { success = true; }
 	return success;
 	}
@@ -66,7 +66,7 @@ public class MemberDAOImplXML implements MemberDAO {
 	public MemberDTO getMember(String id) {
 		logger.info("MemberDAOImplXML.getMember 호출됨!");
 		MemberDTO memberDTO = null;
-		memberDTO = sqlSession.selectOne("memberSelectOne", id);
+		memberDTO = sqlSession.selectOne("mappers.member.memberSelectOne", id);
 		return memberDTO;
 	}
 	//회원 목록 조회
@@ -74,7 +74,7 @@ public class MemberDAOImplXML implements MemberDAO {
 	public List<MemberDTO> getMemberList() {
 		logger.info("MemberDAOImplXML.getMemberList 호출됨!");		
 		List<MemberDTO> list = null;
-		list = sqlSession.selectList("memberSelectList");
+		list = sqlSession.selectList("mappers.member.memberSelectList");
 		return list;
 	}
 }

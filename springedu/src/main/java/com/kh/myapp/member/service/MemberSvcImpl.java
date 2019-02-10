@@ -1,11 +1,16 @@
 package com.kh.myapp.member.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.kh.myapp.member.dao.MemberDAO;
@@ -32,9 +37,48 @@ public class MemberSvcImpl implements MemberSvc {
 	@Override
 	public boolean modify(MemberDTO memberDTO) {
 		boolean success = false;
-		success = mdao.modify(memberDTO);
+		
+		// 파일첨부가 존재하면
+		if(!memberDTO.getFile().isEmpty()) {	
+		  if(!fileUpload(memberDTO)) {
+		  	return false;
+		  };	
+		}
+		
+		success = mdao.modify(memberDTO);		  	
 		return success;
+	}
 
+	// 파일 업로드
+	private boolean fileUpload(MemberDTO memberDTO) {
+		boolean isUpload = false;
+		
+		String randomFileName = null;   //난수 파일명
+		String originFileName = null;   //초기 파일명
+		String fileLocation = "D:\\LSH\\git\\repository\\springedu\\src\\main\\webapp\\resources\\upload";
+			
+		randomFileName = UUID.randomUUID().toString();
+		originFileName = memberDTO.getFile().getOriginalFilename();
+	
+		// 초기 화일명에서 확장자 추출
+		int pos = originFileName.lastIndexOf(".");
+		String ext = originFileName.substring(pos+1);
+		randomFileName = randomFileName + "." + ext;
+		
+		File tmpFile = new File(fileLocation, randomFileName);
+		try {
+			// 파일시스템에 파일쓰기
+			memberDTO.getFile().transferTo(tmpFile);
+			// memberDTO 갱신
+			memberDTO.setFile(null);
+			memberDTO.setOriginFileName(originFileName);
+			memberDTO.setRandomFileName(randomFileName);
+			isUpload = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return isUpload;
 	}
 
 	//회원 삭제(회원용)

@@ -52,7 +52,7 @@
 </head>
 <body>
 <%-- 	<form:form modelAttribute="mdto" action="memberJoin"> --%>
-	<form:form modelAttribute="mdto" action="${pageContext.request.contextPath }/member/memberModify">
+	<form:form modelAttribute="mdto" enctype="multipart/form-data"  action="${pageContext.request.contextPath }/member/memberModify">
 		                                       
 		<h2>[회원수정]</h2>
 		<ul>
@@ -100,6 +100,14 @@
 				<form:input type="date" path="birth" />
 				<form:errors path="birth" cssClass="errmsg"></form:errors>
 			</li>
+			<li>
+				<img alt="이미지" src="/resources/upload/${mdto.randomFileName }">
+			</li>			
+			<li>
+				<form:label path="file">이미지첨부</form:label>
+				<form:input type="file" path="file" />
+				<form:errors path="file" cssClass="errmsg"></form:errors>
+			</li>			
 			<li><button id="modifyBtn">수정</button>
 					<button id="modifyCancelBtn">취소</button>
 			</li>
