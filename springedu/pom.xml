@@ -360,6 +360,22 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            
+            <!--  메이븐을 통한 톰켓서버 배포 시작-->
+						<plugin>
+						    <groupId>org.apache.tomcat.maven</groupId>
+						    <artifactId>tomcat7-maven-plugin</artifactId>
+						    <version>2.2</version>
+						    <configuration>
+						        <path>/</path>
+						        <url>http://localhost:9080/manager/text</url>
+						        <username>admin</username>
+						        <password>admin1234</password>
+						        <update>true</update>
+						    </configuration>
+						</plugin>
+
+            <!--  메이븐을 통한 톰켓서버 배포 끝-->            
         </plugins>
     </build>
 </project>
